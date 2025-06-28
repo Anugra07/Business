@@ -10,13 +10,16 @@ import { NotificationCenter } from "./NotificationCenter";
 
 type Tab = "overview" | "group-apps" | "wolf-pack" | "marketplace" | "teams" | "admin";
 
+
+
+
 export function Dashboard() {
   const [activeTab, setActiveTab] = useState<Tab>("overview");
   const profile = useQuery(api.profiles.getCurrentProfile);
   const userTeams = useQuery(api.teams.getUserTeams);
   const userApplications = useQuery(api.applications.getUserApplications);
   const unreadCount = useQuery(api.notifications.getUnreadCount);
-
+  
   if (!profile) return null;
 
   const tabs = [
@@ -25,8 +28,11 @@ export function Dashboard() {
     { id: "wolf-pack" as Tab, label: "Wolf Pack Projects", icon: "🐺" },
     { id: "marketplace" as Tab, label: "Opportunities", icon: "🚀" },
     { id: "teams" as Tab, label: "My Teams", icon: "⭐" },
-    { id: "admin" as Tab, label: "Admin", icon: "⚙️" },
+    { id: "admin", label: "Admin", icon: "⚙️" }
   ];
+  // if (profile.email === "anugragupta07@gmail.com") {
+  //   tabs.push();
+  // }
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -72,7 +78,14 @@ export function Dashboard() {
       {/* Main Content */}
       <div className="flex-1 overflow-auto">
         <div className="p-8">
-          {activeTab === "overview" && <Overview profile={profile} teams={userTeams} applications={userApplications} />}
+          {activeTab === "overview" && (
+  <Overview
+    profile={profile}
+    teams={userTeams}
+    applications={userApplications}
+    setActiveTab={setActiveTab} // 🔑 this passes the handler
+  />
+)}
           {activeTab === "group-apps" && <GroupApplications />}
           {activeTab === "wolf-pack" && <WolfPackProjects />}
           {activeTab === "marketplace" && <OpportunityMarketplace />}
@@ -87,7 +100,7 @@ export function Dashboard() {
   );
 }
 
-function Overview({ profile, teams, applications }: any) {
+function Overview({ profile, teams, applications, setActiveTab }: any) {
   return (
     <div className="space-y-8">
       <div>
@@ -152,7 +165,7 @@ function Overview({ profile, teams, applications }: any) {
       <div className="bg-white p-6 rounded-lg shadow-sm border">
         <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors">
+          <button className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors" onClick={() => setActiveTab("group-apps")}>
             <div className="text-center">
               <span className="text-3xl mb-2 block">👥</span>
               <h3 className="font-semibold text-gray-900">Apply for Group</h3>
@@ -160,7 +173,7 @@ function Overview({ profile, teams, applications }: any) {
             </div>
           </button>
           
-          <button className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors">
+          <button className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors" onClick={() => setActiveTab("wolf-pack")}>
             <div className="text-center">
               <span className="text-3xl mb-2 block">🐺</span>
               <h3 className="font-semibold text-gray-900">Join Wolf Pack</h3>
@@ -168,7 +181,7 @@ function Overview({ profile, teams, applications }: any) {
             </div>
           </button>
           
-          <button className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors">
+          <button className="p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors" onClick={() => setActiveTab("marketplace")}>
             <div className="text-center">
               <span className="text-3xl mb-2 block">🚀</span>
               <h3 className="font-semibold text-gray-900">Create Opportunity</h3>
