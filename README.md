@@ -1,6 +1,6 @@
 # Collaborative Platform - Full Implementation
   
-This is a project built with [Chef](https://chef.convex.dev) using [Convex](https://convex.dev) as its backend.
+This is a project built using [Convex](https://convex.dev) as its backend.
   
 This project is connected to the Convex deployment named [`adventurous-viper-706`](https://dashboard.convex.dev/d/adventurous-viper-706).
   
