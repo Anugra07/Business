@@ -6,7 +6,7 @@ const applicationTables = {
   // User profiles with extended information
   profiles: defineTable({
     userId: v.id("users"),
-    email: v.string(),
+    email: v.optional(v.string()),
     firstName: v.string(),
     lastName: v.string(),
     bio: v.optional(v.string()),
